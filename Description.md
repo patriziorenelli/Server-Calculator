@@ -6,47 +6,47 @@
   dell’operazione che era stata inviata al server.
 
 ## Librerie utilizzate sia per client che server 
-  • stdio.h : utilizzata per gestione input/output;
-  • stdbool.h : per implementare le variabili booleane usate, si sarebbe potuto evitare ed usare un int;
-  • unistd.h : per funzione close();
-  • stdlib.h : per funzione exit();
-  • string.h : per sfruttare funzioni come strcmp(), memset(), memcpy(), bzero(), strncat(), strtok();
-  • netdb.h: per funzione gethostbyname();
-  • sys/socket.h: struttura dati sockaddr, funzioni connect(), recv();
-  • ctype.h: per funzione isdigit();
+  • stdio.h : utilizzata per gestione input/output;<br />
+  • stdbool.h : per implementare le variabili booleane usate, si sarebbe potuto evitare ed usare un int;<br />
+  • unistd.h : per funzione close();<br />
+  • stdlib.h : per funzione exit();<br />
+  • string.h : per sfruttare funzioni come strcmp(), memset(), memcpy(), bzero(), strncat(), strtok();<br />
+  • netdb.h: per funzione gethostbyname();<br />
+  • sys/socket.h: struttura dati sockaddr, funzioni connect(), recv();<br />
+  • ctype.h: per funzione isdigit();<br />
 
 ## Costanti utilizzate
 ### Client:
-  • MAX_LEN_INPUT lunghezza massima della stringa letta in input e usata poi per gli scambi
-  • MAX_LEN_NUMBER lunghezza massima dei singoli operatori presi dalla stringa letta 
-  • MAX_LEN_RESULT lunghezza massima del risultato ricevuto dal server 
-  • INF stringa che rappresenta infinito eventualmente ricevuto dal server 
+  • MAX_LEN_INPUT lunghezza massima della stringa letta in input e usata poi per gli scambi<br />
+  • MAX_LEN_NUMBER lunghezza massima dei singoli operatori presi dalla stringa letta <br />
+  • MAX_LEN_RESULT lunghezza massima del risultato ricevuto dal server <br />
+  • INF stringa che rappresenta infinito eventualmente ricevuto dal server <br />
   • char operazioni[4] = {‘+’, ‘-‘, ‘*’,’/’} array che rappresenta le varie operazioni che il server può svolgere e che sono 
-    quindi consentite 
+    quindi consentite <br />
 ### Server:
   • BACKLOG: usata per la listen rappresenta la lunghezza massima in cui può crescere la coda di connessioni in 
-    sospeso per la sockfd
-  • MAX_LEN_INPUT: lunghezza massima della stringa ricevuta in input dal client 
-  • MAX_LEN_RESULT: lunghezza massima della stringa inviata al client come risultato dell’operazione richiesta
-  • DIM_TIMESTAMP: lunghezza massima dei timestamp inviati al client
-  • DIM_OUTPUT: lunghezza massima della stringa che verrà salvata all’interno del file di log
+    sospeso per la sockfd<br />
+  • MAX_LEN_INPUT: lunghezza massima della stringa ricevuta in input dal client <br />
+  • MAX_LEN_RESULT: lunghezza massima della stringa inviata al client come risultato dell’operazione richiesta<br />
+  • DIM_TIMESTAMP: lunghezza massima dei timestamp inviati al client<br />
+  • DIM_OUTPUT: lunghezza massima della stringa che verrà salvata all’interno del file di log<br />
   
 ## Funzioni dichiarate
 ### Client:
   • int check_positive_or_negative(char): funzione che controlla se il carattere che è stato passato come parametro 
-    rappresenta il simbolo ‘+’ oppure ‘-‘, la funzione prende in input un singolo carattere;
+    rappresenta il simbolo ‘+’ oppure ‘-‘, la funzione prende in input un singolo carattere;<br />
   • int check_operator(char): funzione che controlla se il carattere che è stato passato come parametro rappresenta un 
     simbolo delle operazioni standard possibili da eseguire, specificate nell’array ‘operazioni’, la funzione prende in input 
-    un singolo carattere;
+    un singolo carattere;<br />
   • int lettura_input(char [], char [], char [] , char* ): funzione che effettua la lettura della stringa dall’utente, controlla 
     carattere per carattere se la stringa è formattata bene, se i caratteri inseriti sono consentiti e se la lunghezza dei 
     singoli operandi rientra nella lunghezza massima consentita, la funzione prende in input tre array (usati poi per: la 
     stringa che viene letta in input dall’utente| il primo numero letto| il secondo numero letto) e un puntatore ad un 
-    carattere (che conterrà il simbolo dell’operazione richiesta);
+    carattere (che conterrà il simbolo dell’operazione richiesta);<br />
   • void print_errore(): funzione che stampa un messaggio di errore per indicare all’utente che sta inserendo una stringa 
     che non rispetta lo standard richiesto e mostra i modi in cui è possibile scrivere una stringa corretta;
-    Server:
-  • void *esecuzione_server( void *arg): routine eseguita dai vari thread creati;
+    Server:<br />
+  • void *esecuzione_server( void *arg): routine eseguita dai vari thread creati;<br />
   
 ## Variabili dichiarate
   Le varie variabili usate sono state adeguatamente commentate all’interno dei vari file contenenti il codice del client e del server
@@ -138,7 +138,7 @@
   variabile risultato_stringa, con il formato “timestamp_ricezione,timestamp_fine, risultato”, e lo si invia con la funz send(), 
   verificando se la trasmissione è andata a buon fine, in caso di errore si termina il thread relativo alla trasmissione.
   Alla fine del ciclo while si chiude il file di log aperto e la socket utilizzata.
-  Come utilizzare il programma
+## Come utilizzare il programma
   Su una o più altre shell avviare i programmi client, il programma chiederà di inserire un’operazione nel formato consentito e in caso 
   di operazione corretta e operazione effettuata con successo mostrerà il risultato e il tempo di esecuzione formattato nel modo 
   “Risultato: ris Tempo esecuzione: tempo s”. In caso di errore di connessione mostrerà il relativo errore, in caso di operazione non 
@@ -146,20 +146,20 @@
   spiegherà all’utente quali formattazioni sono considerate corrette.
   In una shell avvia il programma server che servirà tutti i futuri client che verranno attivati. Il server rimarrà in attesa e dopo aver 
   eseguito le operazioni mostrerà tutte le operazioni con i risultati richieste dai vari utenti.
-  Prove effettuate
-## Formato operazione -> Risultato stampato dal client
-  4 * 5 -> Risultato:20.000000 Tempo esecuzione:0.000015s
-  4* -6-> Risultato:-24.000000 Tempo esecuzione:0. 000018s
-  4*5 -> Risultato:20.000000 Tempo esecuzione:0.000026s
-  15+58.6 -> Risultato:73.600000 Tempo esecuzione:0.000015s
-  -125.301259*+3.232501 -> Risultato:-405.036445 Tempo esecuzione:0.000016s
-  18-96.3 -> Risultato:-78.300000 Tempo esecuzione:0.000015s
-  -65/+9 -> Risultato:-7.222222 Tempo esecuzione:0.000013s
-  -0.0123654789872/8512325.0022 -> Gli operandi devono essere di len massima 14
-  -745.025/0 -> L'operazione non e' consentita (Es: num/0)
-  -Se si esegue un’operazione, ma il server è già terminato -> Errore con il server. Riavviare il processo
-  -Se il client prova a connettersi ma il server non è attivo -> Errore nella connessione con il server: Connection refused
-  -8..3654-96.2 | -98*+-8 | ** | 1-. | -+-+ | *+1 | -1/. | 8.635*965..256 | 98.36*.9 | +9 | 13d.90/45 | a/b | a467.0/85 | 12i/9 |  567i/8 | 720A/8 | A/B | ab/c | 34*584/59 | 4+5*5 -> La stringa e' formattata male provare con uno dei seguenti formati:
-  - N1opN2
-  - SegnoN1opSegnoN2
-  - N1 op N2
+## Prove effettuate
+#### Formato operazione -> Risultato stampato dal client
+  4 * 5 -> Risultato:20.000000 Tempo esecuzione:0.000015s<br />
+  4* -6-> Risultato:-24.000000 Tempo esecuzione:0. 000018s<br />
+  4*5 -> Risultato:20.000000 Tempo esecuzione:0.000026s<br />
+  15+58.6 -> Risultato:73.600000 Tempo esecuzione:0.000015s<br />
+  -125.301259*+3.232501 -> Risultato:-405.036445 Tempo esecuzione:0.000016s<br />
+  18-96.3 -> Risultato:-78.300000 Tempo esecuzione:0.000015s<br />
+  -65/+9 -> Risultato:-7.222222 Tempo esecuzione:0.000013s<br />
+  -0.0123654789872/8512325.0022 -> Gli operandi devono essere di len massima 14<br />
+  -745.025/0 -> L'operazione non e' consentita (Es: num/0)<br />
+  -Se si esegue un’operazione, ma il server è già terminato -> Errore con il server. Riavviare il processo<br />
+  -Se il client prova a connettersi ma il server non è attivo -> Errore nella connessione con il server: Connection refused<br />
+  -8..3654-96.2 | -98*+-8 | ** | 1-. | -+-+ | *+1 | -1/. | 8.635*965..256 | 98.36*.9 | +9 | 13d.90/45 | a/b | a467.0/85 | 12i/9 |  567i/8 | 720A/8 | A/B | ab/c | 34*584/59 | 4+5*5 -> La stringa e' formattata male provare con uno dei seguenti formati:<br />
+  - N1opN2<br />
+  - SegnoN1opSegnoN2<br />
+  - N1 op N2<br />
